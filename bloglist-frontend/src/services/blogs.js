@@ -24,5 +24,35 @@ const createBlog = async (data) => {
     throw new Error(error.response.data.error);
   }
 };
+
+const updateBlogLikes = async (id) => {
+  try {
+    const respnse = await axios.put(
+      `${baseUrl}/${id}/likes`,
+      { likes: 1 },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    return respnse.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
+const deleteBlog = async (id) => {
+  try {
+    const respnse = await axios.delete(`${baseUrl}/${id}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return respnse.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, createBlog, setToken };
+export default { getAll, createBlog, setToken, updateBlogLikes, deleteBlog };

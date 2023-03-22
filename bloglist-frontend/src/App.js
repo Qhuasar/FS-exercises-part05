@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import Loginform from "./components/Login";
@@ -6,6 +6,7 @@ import loginService from "./services/users";
 import BlogForm from "./components/BlogForm";
 import Notification from "./components/Notification";
 import ErrorNotification from "./components/ErrorNotification";
+import Togglable from "./components/Togglable";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -16,8 +17,18 @@ const App = () => {
   const [newNotification, setNewNotification] = useState(null);
   const [newErrorNotification, setNewErrorNotification] = useState(null);
 
+  const refBlogForm = useRef();
+
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    blogService.getAll().then((blogs) =>
+      setBlogs(
+        blogs.sort((a, b) => {
+          if (a.likes > b.likes) return -1;
+          if (a.likes < b.likes) return 1;
+          return 0;
+        })
+      )
+    );
   }, [refreshBlogs]);
 
   useEffect(() => {
@@ -72,16 +83,26 @@ const App = () => {
       <div>
         <h2>blogs</h2>
         {blogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} />
+          <Blog
+            key={blog.id}
+            blog={blog}
+            refreshBlogs={refreshBlogs}
+            setRefreshBlogs={setRefreshBlogs}
+            changeErrorNotification={changeErrorNotification}
+            changeNotification={changeNotification}
+          />
         ))}
-        <BlogForm
-          handleChange={handleChange}
-          user={user}
-          refreshBlogs={refreshBlogs}
-          setRefreshBlogs={setRefreshBlogs}
-          changeErrorNotification={changeErrorNotification}
-          changeNotification={changeNotification}
-        />
+        <Togglable ref={refBlogForm} info="new blog">
+          <BlogForm
+            handleChange={handleChange}
+            user={user}
+            refreshBlogs={refreshBlogs}
+            setRefreshBlogs={setRefreshBlogs}
+            changeErrorNotification={changeErrorNotification}
+            changeNotification={changeNotification}
+            ref={refBlogForm}
+          />
+        </Togglable>
       </div>
     );
   };

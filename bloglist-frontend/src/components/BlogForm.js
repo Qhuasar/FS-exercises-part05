@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import blogServices from "../services/blogs";
 
-const BlogForm = (props) => {
+const BlogForm = forwardRef((props, refs) => {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [author, setAuthor] = useState("");
@@ -13,6 +13,7 @@ const BlogForm = (props) => {
       props.changeNotification(
         `${title} by ${author} as been sucessfuly added`
       );
+      refs.current.toggleVisible();
       setAuthor("");
       setTitle("");
       setUrl("");
@@ -44,6 +45,6 @@ const BlogForm = (props) => {
       <button type="submit">create</button>
     </form>
   );
-};
+});
 
 export default BlogForm;
