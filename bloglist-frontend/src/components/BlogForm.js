@@ -1,15 +1,47 @@
 import { useState } from "react";
+import blogServices from "../services/blogs";
 
 const BlogForm = (props) => {
-    const [title, setTitle] = useState(null)
+  const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
+  const [author, setAuthor] = useState("");
+
+  const handleCreate = async (event) => {
+    event.preventDefault();
+    try {
+      await blogServices.createBlog({ title, url, author });
+      props.changeNotification(
+        `${title} by ${author} as been sucessfuly added`
+      );
+      setAuthor("");
+      setTitle("");
+      setUrl("");
+      props.setRefreshBlogs(props.refreshBlogs + 1);
+    } catch (error) {
+      props.changeErrorNotification(error.message);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={(e) => handleCreate(e)}>
+      <h1>Create new blog</h1>
+      <p />
       <label>title</label>
-      <input></input>
+      <input
+        value={title}
+        onChange={(e) => props.handleChange(e, setTitle, title)}
+      />
+      <p />
       <label>url</label>
-      <input></input>
-      <label>likes</label>
-      <input></input>
+      <input value={url} onChange={(e) => props.handleChange(e, setUrl, url)} />
+      <p />
+      <label>author</label>
+      <input
+        value={author}
+        onChange={(e) => props.handleChange(e, setAuthor, author)}
+      />
+      <p />
+      <button type="submit">create</button>
     </form>
   );
 };
