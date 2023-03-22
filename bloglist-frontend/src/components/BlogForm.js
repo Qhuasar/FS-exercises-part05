@@ -1,27 +1,27 @@
-import { forwardRef, useState } from "react";
-import blogServices from "../services/blogs";
+import { forwardRef, useState } from 'react'
+import blogServices from '../services/blogs'
 
 const BlogForm = forwardRef((props, refs) => {
-  const [title, setTitle] = useState("");
-  const [url, setUrl] = useState("");
-  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState('')
+  const [url, setUrl] = useState('')
+  const [author, setAuthor] = useState('')
 
   const handleCreate = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      await blogServices.createBlog({ title, url, author });
+      await blogServices.createBlog({ title, url, author })
       props.changeNotification(
         `${title} by ${author} as been sucessfuly added`
-      );
-      refs.current.toggleVisible();
-      setAuthor("");
-      setTitle("");
-      setUrl("");
-      props.setRefreshBlogs(props.refreshBlogs + 1);
+      )
+      refs.current.toggleVisible()
+      setAuthor('')
+      setTitle('')
+      setUrl('')
+      props.setRefreshBlogs(props.refreshBlogs + 1)
     } catch (error) {
-      props.changeErrorNotification(error.message);
+      props.changeErrorNotification(error.message)
     }
-  };
+  }
 
   return (
     <form onSubmit={(e) => handleCreate(e)}>
@@ -44,7 +44,9 @@ const BlogForm = forwardRef((props, refs) => {
       <p />
       <button type="submit">create</button>
     </form>
-  );
-});
+  )
+})
 
-export default BlogForm;
+BlogForm.displayName = 'BlogFrom'
+
+export default BlogForm

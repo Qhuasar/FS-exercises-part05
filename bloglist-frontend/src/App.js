@@ -1,82 +1,82 @@
-import { useState, useEffect, useRef } from "react";
-import Blog from "./components/Blog";
-import blogService from "./services/blogs";
-import Loginform from "./components/Login";
-import loginService from "./services/users";
-import BlogForm from "./components/BlogForm";
-import Notification from "./components/Notification";
-import ErrorNotification from "./components/ErrorNotification";
-import Togglable from "./components/Togglable";
+import { useState, useEffect, useRef } from 'react'
+import Blog from './components/Blog'
+import blogService from './services/blogs'
+import Loginform from './components/Login'
+import loginService from './services/users'
+import BlogForm from './components/BlogForm'
+import Notification from './components/Notification'
+import ErrorNotification from './components/ErrorNotification'
+import Togglable from './components/Togglable'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
-  const [refreshBlogs, setRefreshBlogs] = useState(0);
-  const [newNotification, setNewNotification] = useState(null);
-  const [newErrorNotification, setNewErrorNotification] = useState(null);
+  const [blogs, setBlogs] = useState([])
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
+  const [refreshBlogs, setRefreshBlogs] = useState(0)
+  const [newNotification, setNewNotification] = useState(null)
+  const [newErrorNotification, setNewErrorNotification] = useState(null)
 
-  const refBlogForm = useRef();
+  const refBlogForm = useRef()
 
   useEffect(() => {
     blogService.getAll().then((blogs) =>
       setBlogs(
         blogs.sort((a, b) => {
-          if (a.likes > b.likes) return -1;
-          if (a.likes < b.likes) return 1;
-          return 0;
+          if (a.likes > b.likes) return -1
+          if (a.likes < b.likes) return 1
+          return 0
         })
       )
-    );
-  }, [refreshBlogs]);
+    )
+  }, [refreshBlogs])
 
   useEffect(() => {
-    const loggedUser = window.localStorage.getItem("loggedUser");
+    const loggedUser = window.localStorage.getItem('loggedUser')
     if (loggedUser) {
-      const user = JSON.parse(loggedUser);
-      setUser(user);
-      blogService.setToken(user.token);
+      const user = JSON.parse(loggedUser)
+      setUser(user)
+      blogService.setToken(user.token)
     }
-  }, []);
+  }, [])
 
   const handleChange = (event, setState) => {
-    event.preventDefault();
-    setState(event.target.value);
-  };
+    event.preventDefault()
+    setState(event.target.value)
+  }
 
   const handleLogout = () => {
-    window.localStorage.removeItem("loggedUser");
-    setUser(null);
-  };
+    window.localStorage.removeItem('loggedUser')
+    setUser(null)
+  }
 
   const changeNotification = (msg) => {
-    setNewNotification(msg);
+    setNewNotification(msg)
     setTimeout(() => {
-      setNewNotification(null);
-    }, 5000);
-  };
+      setNewNotification(null)
+    }, 5000)
+  }
 
   const changeErrorNotification = (msg) => {
-    setNewErrorNotification(msg);
+    setNewErrorNotification(msg)
     setTimeout(() => {
-      setNewErrorNotification(null);
-    }, 5000);
-  };
+      setNewErrorNotification(null)
+    }, 5000)
+  }
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const newUser = await loginService.loginUser({ username, password });
-      window.localStorage.setItem("loggedUser", JSON.stringify(newUser));
-      blogService.setToken(newUser.token);
-      setUser(newUser);
-      setPassword("");
-      setUsername("");
+      const newUser = await loginService.loginUser({ username, password })
+      window.localStorage.setItem('loggedUser', JSON.stringify(newUser))
+      blogService.setToken(newUser.token)
+      setUser(newUser)
+      setPassword('')
+      setUsername('')
     } catch (error) {
-      changeErrorNotification("Wrong credentials");
+      changeErrorNotification('Wrong credentials')
     }
-  };
+  }
 
   const displayBlogs = () => {
     return (
@@ -104,8 +104,8 @@ const App = () => {
           />
         </Togglable>
       </div>
-    );
-  };
+    )
+  }
 
   const displayLoggedIn = () => (
     <div>
@@ -114,7 +114,7 @@ const App = () => {
         logout
       </button>
     </div>
-  );
+  )
 
   return (
     <div>
@@ -136,7 +136,7 @@ const App = () => {
         displayBlogs()
       )}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

@@ -1,5 +1,5 @@
-import Togglable from "./Togglable";
-import BlogInfo from "./BlogInfo";
+import Togglable from './Togglable'
+import BlogInfo from './BlogInfo'
 
 const Blog = ({
   blog,
@@ -12,10 +12,10 @@ const Blog = ({
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: "solid",
+    border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
-  };
+  }
   return (
     <div style={blogStyle}>
       {blog.title} {blog.author}
@@ -29,7 +29,8 @@ const Blog = ({
         />
       </Togglable>
     </div>
-  );
-};
+  )
+}
 
-export default Blog;
+Blog.displayName = 'Blog'
+export default Blog

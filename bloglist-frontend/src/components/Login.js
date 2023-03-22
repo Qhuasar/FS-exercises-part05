@@ -16,7 +16,8 @@ const Loginform = (props) => {
       <p />
       <button type="submit">Login</button>
     </form>
-  );
-};
+  )
+}
 
-export default Loginform;
+Loginform.displayName = 'LoginForm'
+export default Loginform
