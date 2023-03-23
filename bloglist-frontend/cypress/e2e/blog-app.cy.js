@@ -93,7 +93,7 @@ describe("Blog App", () => {
       ).should("not.exist")
     })
 
-    it.only("able to remove blog", function () {
+    it.only("show blogs by the correct order(most likes)", function () {
       cy.createBlog(testBlog2)
       cy.visit("")
       cy.contains("There are many test blogs but this one is mine!")
