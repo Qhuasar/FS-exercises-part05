@@ -1,17 +1,17 @@
-import { useState, useEffect, useRef } from 'react'
-import Blog from './components/Blog'
-import blogService from './services/blogs'
-import Loginform from './components/Login'
-import loginService from './services/users'
-import BlogForm from './components/BlogForm'
-import Notification from './components/Notification'
-import ErrorNotification from './components/ErrorNotification'
-import Togglable from './components/Togglable'
+import { useState, useEffect, useRef } from "react"
+import Blog from "./components/Blog"
+import blogService from "./services/blogs"
+import Loginform from "./components/Login"
+import loginService from "./services/users"
+import BlogForm from "./components/BlogForm"
+import Notification from "./components/Notification"
+import ErrorNotification from "./components/ErrorNotification"
+import Togglable from "./components/Togglable"
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
   const [user, setUser] = useState(null)
   const [refreshBlogs, setRefreshBlogs] = useState(0)
   const [newNotification, setNewNotification] = useState(null)
@@ -32,7 +32,7 @@ const App = () => {
   }, [refreshBlogs])
 
   useEffect(() => {
-    const loggedUser = window.localStorage.getItem('loggedUser')
+    const loggedUser = window.localStorage.getItem("loggedUser")
     if (loggedUser) {
       const user = JSON.parse(loggedUser)
       setUser(user)
@@ -46,7 +46,7 @@ const App = () => {
   }
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedUser')
+    window.localStorage.removeItem("loggedUser")
     setUser(null)
   }
 
@@ -68,13 +68,13 @@ const App = () => {
     e.preventDefault()
     try {
       const newUser = await loginService.loginUser({ username, password })
-      window.localStorage.setItem('loggedUser', JSON.stringify(newUser))
+      window.localStorage.setItem("loggedUser", JSON.stringify(newUser))
       blogService.setToken(newUser.token)
       setUser(newUser)
-      setPassword('')
-      setUsername('')
+      setPassword("")
+      setUsername("")
     } catch (error) {
-      changeErrorNotification('Wrong credentials')
+      changeErrorNotification("Wrong credentials")
     }
   }
 

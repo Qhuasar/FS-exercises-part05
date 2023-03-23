@@ -6,12 +6,14 @@ const Loginform = (props) => {
       <input
         onChange={(event) => props.handleChange(event, props.setUsername)}
         value={props.username}
+        id={"username"}
       />
       <p />
       <label>password: </label>
       <input
         onChange={(event) => props.handleChange(event, props.setPassword)}
         value={props.password}
+        id={"password"}
       />
       <p />
       <button type="submit">Login</button>
@@ -19,5 +21,5 @@ const Loginform = (props) => {
   )
 }
 
-Loginform.displayName = 'LoginForm'
+Loginform.displayName = "LoginForm"
 export default Loginform

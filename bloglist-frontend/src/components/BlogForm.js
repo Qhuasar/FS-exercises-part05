@@ -1,10 +1,10 @@
-import { forwardRef, useState } from 'react'
-import blogServices from '../services/blogs'
+import { forwardRef, useState } from "react"
+import blogServices from "../services/blogs"
 
 const BlogForm = forwardRef((props, refs) => {
-  const [title, setTitle] = useState('')
-  const [url, setUrl] = useState('')
-  const [author, setAuthor] = useState('')
+  const [title, setTitle] = useState("")
+  const [url, setUrl] = useState("")
+  const [author, setAuthor] = useState("")
 
   const handleCreate = async (event) => {
     event.preventDefault()
@@ -14,9 +14,9 @@ const BlogForm = forwardRef((props, refs) => {
         `${title} by ${author} as been sucessfuly added`
       )
       refs.current.toggleVisible()
-      setAuthor('')
-      setTitle('')
-      setUrl('')
+      setAuthor("")
+      setTitle("")
+      setUrl("")
       props.setRefreshBlogs(props.refreshBlogs + 1)
     } catch (error) {
       props.changeErrorNotification(error.message)
@@ -29,24 +29,30 @@ const BlogForm = forwardRef((props, refs) => {
       <p />
       <label>title</label>
       <input
+        id={"title-inpt"}
         value={title}
         onChange={(e) => props.handleChange(e, setTitle, title)}
       />
       <p />
       <label>url</label>
-      <input value={url} onChange={(e) => props.handleChange(e, setUrl, url)} />
+      <input
+        id={"url-inpt"}
+        value={url}
+        onChange={(e) => props.handleChange(e, setUrl, url)}
+      />
       <p />
       <label>author</label>
       <input
+        id={"author-inpt"}
         value={author}
         onChange={(e) => props.handleChange(e, setAuthor, author)}
       />
       <p />
-      <button type="submit">create</button>
+      <button id="create-blog-btn" type="submit">create</button>
     </form>
   )
 })
 
-BlogForm.displayName = 'BlogFrom'
+BlogForm.displayName = "BlogFrom"
 
 export default BlogForm

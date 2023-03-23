@@ -1,13 +1,13 @@
 const mystyle = {
-  color: 'white',
-  backgroundColor: '#F04141',
+  color: "white",
+  backgroundColor: "#F04141",
   padding: 10,
-  fontFamily: 'Arial',
+  fontFamily: "Arial",
 }
 
 const ErrorNotification = (props) => {
-  return <h1 style={mystyle}>{props.msg}</h1>
+  return <h1 id={"error-notf"} style={mystyle}>{props.msg}</h1>
 }
 
-ErrorNotification.displayName = 'ErrorNotification'
+ErrorNotification.displayName = "ErrorNotification"
 export default ErrorNotification

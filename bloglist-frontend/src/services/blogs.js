@@ -1,7 +1,7 @@
-import axios from 'axios'
-const baseUrl = '/api/blogs'
+import axios from "axios"
+const baseUrl = "/api/blogs"
 
-let token = ''
+let token = ""
 
 const getAll = () => {
   const request = axios.get(baseUrl)
