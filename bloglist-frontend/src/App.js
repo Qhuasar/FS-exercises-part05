@@ -82,16 +82,18 @@ const App = () => {
     return (
       <div>
         <h2>blogs</h2>
-        {blogs.map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            refreshBlogs={refreshBlogs}
-            setRefreshBlogs={setRefreshBlogs}
-            changeErrorNotification={changeErrorNotification}
-            changeNotification={changeNotification}
-          />
-        ))}
+        <div>
+          {blogs.map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              refreshBlogs={refreshBlogs}
+              setRefreshBlogs={setRefreshBlogs}
+              changeErrorNotification={changeErrorNotification}
+              changeNotification={changeNotification}
+            />
+          ))}
+        </div>
         <Togglable ref={refBlogForm} info="new blog">
           <BlogForm
             handleChange={handleChange}

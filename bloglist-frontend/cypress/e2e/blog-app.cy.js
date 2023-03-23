@@ -39,6 +39,11 @@ describe("Blog App", () => {
       author: "Me",
       url: "http://thislinkisonlyaviabletosubs.com",
     }
+    const testBlog2 = {
+      title: "Second most likes",
+      author: "Me",
+      url: "http://thislinkisonlyaviabletosubs.com",
+    }
     beforeEach(function () {
       cy.login(testUser)
       cy.createBlog(testBlog)
@@ -62,7 +67,7 @@ describe("Blog App", () => {
         .and("have.css", "background-color", "rgb(65, 240, 100)")
     })
 
-    it.only("able to like a blog", function () {
+    it("able to like a blog", function () {
       cy.visit("")
       cy.contains("There are many test blogs but this one is mine!")
         .contains("more info")
@@ -73,6 +78,36 @@ describe("Blog App", () => {
       cy.contains("There are many test blogs but this one is mine!").contains(
         "1"
       )
+    })
+
+    it("able to remove blog", function () {
+      cy.visit("")
+      cy.contains("There are many test blogs but this one is mine!")
+        .contains("more info")
+        .click()
+      cy.contains("There are many test blogs but this one is mine!")
+        .contains("remove")
+        .click()
+      cy.contains(
+        "There are many test blogs but this one is mine! John Clean"
+      ).should("not.exist")
+    })
+
+    it.only("able to remove blog", function () {
+      cy.createBlog(testBlog2)
+      cy.visit("")
+      cy.contains("There are many test blogs but this one is mine!")
+        .contains("more info")
+        .click()
+      for (let i = 0; i < 10; i++) {
+        cy.contains("There are many test blogs but this one is mine!")
+          .contains("like")
+          .click()
+      }
+      cy.get(".blog-cont")
+        .eq(0)
+        .should("contain", "There are many test blogs but this one is mine!")
+      cy.get(".blog-cont").eq(1).should("contain", "Second most likes")
     })
   })
 })
